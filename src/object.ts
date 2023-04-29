@@ -1,8 +1,9 @@
+// @ts-ignore
 import { type } from "@jslib-book/type";
-function hasOwnProp(obj, key) {
+function hasOwnProp(obj:Object, key:string) {
     return Object.prototype.hasOwnProperty.call(obj, key);
 }
-export function pick(obj, paths) {
+export function pick(obj:Object, paths:string | []) {
     if (type(obj) !== "Object") {
         return {};
     }

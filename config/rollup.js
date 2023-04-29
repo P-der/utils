@@ -1,7 +1,9 @@
-var babel = require('rollup-plugin-babel');
+import { babel } from "@rollup/plugin-babel";
+import typescript from "@rollup/plugin-typescript";
 
-var pkg = require('../package.json');
-
+const { default: pkg } = await import("../package.json", {
+    assert: { type: "json" },
+});
 var version = pkg.version;
 
 var banner = `/*!
@@ -11,37 +13,44 @@ var banner = `/*!
 `;
 
 function getCompiler() {
-  return babel({
-    babelrc: false,
-    presets: [
-      [
-        '@babel/preset-env',
-        {
-          targets: {
-            browsers:
-              'last 2 versions, > 1%, ie >= 8, Chrome >= 45, safari >= 10',
-            node: '0.12',
-          },
-          modules: false,
-          loose: false,
-        },
-      ],
-    ],
-    plugins: [
-      [
-        '@babel/plugin-transform-runtime',
-        {
-          corejs: 2,
-          helpers: false,
-          regenerator: false,
-        },
-      ],
-    ],
-    runtimeHelpers: true,
-    exclude: 'node_modules/**',
-  });
+    return [
+        babel({
+            babelHelpers: "runtime",
+            babelrc: false,
+            presets: [
+                [
+                    "@babel/preset-env",
+                    {
+                        targets: {
+                            browsers:
+                                "last 2 versions, > 1%, ie >= 8, Chrome >= 45, safari >= 10",
+                            node: "0.12",
+                        },
+                        modules: false,
+                        loose: false,
+                    },
+                ],
+            ],
+            plugins: [
+                [
+                    "@babel/plugin-transform-runtime",
+                    {
+                        corejs: 2,
+                        helpers: false,
+                        regenerator: false,
+                    },
+                ],
+            ],
+            exclude: "node_modules/**",
+        }),
+        typescript({
+            tsconfig: "./tsconfig.json",
+        }),
+    ];
 }
 
-exports.name = 'utils';
-exports.banner = banner;
-exports.getCompiler = getCompiler;
+export default {
+    name: "utils",
+    banner,
+    getCompiler,
+};

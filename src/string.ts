@@ -1,4 +1,4 @@
-export function truncate(str, len, omission = "...") {
+export function truncate(str:string, len:number, omission = "...") {
     str = String(str);
     omission = String(omission);
     len = Math.round(len);

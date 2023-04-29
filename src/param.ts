@@ -1,4 +1,4 @@
-export function getParam(name, url) {
+export function getParam(name: string, url: string) {
     name = String(name);
     url = String(url);
     const results = new RegExp("[\\?&]" + name + "=([^&#]*)").exec(url);

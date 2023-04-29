@@ -1,4 +1,4 @@
-export function range(start, stop, step = 1) {
+export function range(start:number, stop:number, step = 1) {
     start = isNaN(+start) ? 0 : +start;
     stop = isNaN(+stop) ? 0 : +stop;
     step = isNaN(+step) ? 0 : +step;
